@@ -1,2 +1,6 @@
 .DS_Store
 *.pdf
+
+# Personal photo library / working files — not for the site
+assets/images/IMG_*
+assets/images/COLOR SHADOW.png

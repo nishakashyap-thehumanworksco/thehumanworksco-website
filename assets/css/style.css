@@ -309,6 +309,25 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .nav-links a.active { color: var(--black); }
 
+.nav-links .nav-social {
+  display: inline-flex;
+  align-items: center;
+  color: var(--black);
+}
+.nav-links .nav-social::after { content: none; }
+.nav-links .nav-social svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: none;
+  transition: fill .2s var(--ease), transform .2s var(--ease);
+}
+.nav-links .nav-social:hover svg,
+.nav-links .nav-social:focus-visible svg {
+  fill: var(--yellow-dark);
+  transform: translateY(-1px);
+}
+
 .nav-actions { display: flex; align-items: center; gap: 22px; }
 
 .nav-toggle {
@@ -710,21 +729,24 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .founder-photo {
   position: relative;
   aspect-ratio: 3/4;
-  display: grid;
-  place-items: center;
 }
 .founder-photo .blob {
   position: absolute;
-  inset: 4%;
+  inset: -6%;
   background: linear-gradient(130deg, var(--yellow) 0%, var(--yellow-soft) 38%, var(--yellow) 62%, var(--yellow-dark) 82%, var(--black) 100%);
   background-size: 260% 260%;
   animation: blob-brand 16s ease-in-out infinite;
-  border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+  border-radius: 46% 54% 57% 43% / 52% 46% 54% 48%;
 }
 .founder-photo img {
   position: relative;
   z-index: 2;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 .founder-quote {
   font-size: 1.5rem;
