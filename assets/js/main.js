@@ -59,6 +59,17 @@
     });
   }
 
+  /* Hero: reveal the country list when the "14 countries" stat is clicked */
+  var statToggle = document.querySelector('.stat-toggle');
+  var heroCountries = document.getElementById('heroCountries');
+  if (statToggle && heroCountries) {
+    statToggle.addEventListener('click', function () {
+      var willOpen = heroCountries.hasAttribute('hidden');
+      heroCountries.toggleAttribute('hidden', !willOpen);
+      statToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  }
+
   /* Current year in footer */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }

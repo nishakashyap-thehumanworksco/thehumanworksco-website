@@ -360,19 +360,52 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   margin-top: 44px;
   flex-wrap: wrap;
 }
-.hero-stats div strong {
+.hero-stats > div,
+.hero-stats > .stat-toggle { align-self: flex-start; }
+.hero-stats strong {
   display: block;
   font-family: var(--font-display);
   font-size: 1.7rem;
   font-weight: 800;
   color: var(--black);
 }
-.hero-stats div span {
+.hero-stats span {
   font-size: 0.85rem;
   color: var(--grey-500);
 }
 
-.hero-countries { margin-top: 26px; }
+.hero-stats .stat-toggle {
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+.hero-stats .stat-toggle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.hero-stats .stat-toggle:hover strong,
+.hero-stats .stat-toggle:focus-visible strong { color: var(--yellow-dark); }
+.hero-stats .stat-toggle .stat-caret {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .25s var(--ease);
+}
+.hero-stats .stat-toggle[aria-expanded="true"] .stat-caret { transform: rotate(180deg); }
+
+.hero-countries { margin-top: 22px; }
+.hero-countries[hidden] { display: none; }
+.hero-countries:not([hidden]) { animation: hc-in .3s var(--ease); }
+@keyframes hc-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .hero-countries .hc-label {
   display: block;
   font-size: 0.72rem;
@@ -388,6 +421,9 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   gap: 7px;
 }
 .hero-countries li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--grey-900);
@@ -395,6 +431,11 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   border: 1px solid var(--yellow);
   border-radius: var(--radius-pill);
   padding: 4px 11px;
+}
+.hero-countries .fl { font-size: 0.95rem; line-height: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-countries:not([hidden]) { animation: none; }
 }
 
 .hero-visual {
