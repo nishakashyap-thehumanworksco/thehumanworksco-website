@@ -48,6 +48,27 @@
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
+  /* Journey timeline — grow the line + cascade the milestones into view */
+  var timelineEl = document.querySelector('.timeline');
+  if (timelineEl) {
+    if ('IntersectionObserver' in window) {
+      var tio = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              tio.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      tio.observe(timelineEl);
+    } else {
+      timelineEl.classList.add('is-visible');
+    }
+  }
+
   /* Back to top */
   var backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
