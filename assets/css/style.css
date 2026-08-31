@@ -218,6 +218,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .icon-badge.dark { background: var(--black); }
 .icon-badge.dark svg { stroke: var(--yellow); }
+.icon-badge svg.ico-fill { fill: var(--black); stroke: none; }
 
 /* ---------- Header / Nav ---------- */
 .site-header {
@@ -436,6 +437,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-countries:not([hidden]) { animation: none; }
+  .hero-visual .blob, .founder-photo .blob { animation: none; }
 }
 
 .hero-visual {
@@ -447,8 +449,15 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .hero-visual .blob {
   position: absolute;
   inset: 6%;
-  background: var(--yellow);
+  background: linear-gradient(130deg, var(--yellow) 0%, var(--yellow-soft) 38%, var(--yellow) 62%, var(--yellow-dark) 82%, var(--black) 100%);
+  background-size: 260% 260%;
+  animation: blob-brand 16s ease-in-out infinite;
   border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%;
+}
+@keyframes blob-brand {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 .hero-visual img {
   position: relative;
@@ -667,6 +676,24 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   font-weight: 700;
   margin-top: 2px;
 }
+.timeline-item .place {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--grey-500);
+}
+.timeline-item .place svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--yellow-dark);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .timeline-item p {
   color: var(--grey-700);
   margin-top: 4px;
@@ -689,7 +716,9 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .founder-photo .blob {
   position: absolute;
   inset: 4%;
-  background: var(--yellow);
+  background: linear-gradient(130deg, var(--yellow) 0%, var(--yellow-soft) 38%, var(--yellow) 62%, var(--yellow-dark) 82%, var(--black) 100%);
+  background-size: 260% 260%;
+  animation: blob-brand 16s ease-in-out infinite;
   border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
 }
 .founder-photo img {
@@ -762,6 +791,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .footer-col ul li a:hover { color: var(--yellow); }
 .footer-col ul li a svg { width: 16px; height: 16px; margin-right: 8px; stroke: var(--yellow); fill: none; vertical-align: -3px; }
+.footer-col ul li a svg.ico-fill { fill: var(--yellow); stroke: none; }
 
 .footer-bottom {
   display: flex;
@@ -834,7 +864,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 /* ---------- Contact ---------- */
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 22px;
 }
 .contact-card {
