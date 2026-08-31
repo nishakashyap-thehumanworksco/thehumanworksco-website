@@ -340,6 +340,35 @@
   <svg><use href="#icon-chevron-up"></use></svg>
 </button>
 
+<!-- FAQ chatbot -->
+<div class="chatbot">
+  <button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open chat" aria-expanded="false" aria-controls="chatWindow">
+    <svg class="chat-ico-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>
+    <svg class="chat-ico-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="chat-window" id="chatWindow" role="dialog" aria-label="Chat with Wren" hidden>
+    <div class="chat-header">
+      <span class="chat-avatar" aria-hidden="true">W</span>
+      <div>
+        <strong>Wren</strong>
+        <span>TheHumanWorksCo &middot; replies instantly</span>
+      </div>
+      <button class="chat-close" id="chatClose" type="button" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg bot">
+        <p>Hi, I'm Wren &#128075; &mdash; TheHumanWorksCo's assistant. Tap a question below and I'll answer right away.</p>
+      </div>
+    </div>
+    <div class="chat-faqs" id="chatFaqs" aria-label="Frequently asked questions"></div>
+    <div class="chat-foot">
+      <a href="mailto:nishakashyap@thehumanworksco.com">Still need help? Email Nisha &rarr;</a>
+    </div>
+  </div>
+</div>
+
 <script src="assets/js/main.js"></script>
 </body>
 </html>
