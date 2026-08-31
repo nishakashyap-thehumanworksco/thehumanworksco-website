@@ -66,7 +66,7 @@
 
 
 /* =========================================================
-   FAQ chatbot — "Wren"
+   FAQ chatbot — "Shimona"
    ========================================================= */
 (function () {
   'use strict';
@@ -79,7 +79,7 @@
   if (!launcher || !win || !closeBtn || !faqWrap || !chatBody) { return; }
 
   var EMAIL = 'nishakashyap@thehumanworksco.com';
-  var PHONE = '+44 7971 511601';
+  var PHONE = '+91 91000 64700';
 
   var FAQS = [
     {
@@ -112,11 +112,11 @@
     },
     {
       q: 'Where are you based?',
-      a: 'UK-based, working remotely with founders across time zones. Nisha has led HR across 14 countries and for teams of 11,000+.'
+      a: 'India-based, working with founders across time zones. Nisha has led HR teams across 14 countries and for 11,000+ employees.'
     },
     {
       q: 'How do I get started?',
-      a: 'Email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> or call <a href="tel:+447971511601">' + PHONE + '</a>. Tell Nisha your stage and biggest people challenge &mdash; she\'ll take it from there.'
+      a: 'Email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> or call <a href="tel:+919100064700">' + PHONE + '</a>. Tell Nisha your stage and biggest people challenge &mdash; she\'ll take it from there.'
     }
   ];
 

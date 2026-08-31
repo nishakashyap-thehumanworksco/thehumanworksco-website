@@ -372,6 +372,31 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   color: var(--grey-500);
 }
 
+.hero-countries { margin-top: 26px; }
+.hero-countries .hc-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-500);
+  margin-bottom: 10px;
+}
+.hero-countries ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.hero-countries li {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--grey-900);
+  background: var(--yellow-soft);
+  border: 1px solid var(--yellow);
+  border-radius: var(--radius-pill);
+  padding: 4px 11px;
+}
+
 .hero-visual {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -454,6 +479,31 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .pill .icon-badge { width: 40px; height: 40px; border-radius: var(--radius-pill); }
 .pill .icon-badge svg { width: 20px; height: 20px; }
+
+/* ---------- Career wordmarks ---------- */
+.logo-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.logo-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--grey-900);
+  padding: 10px 20px;
+  border: 1.5px solid var(--grey-300);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  transition: border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
+}
+.logo-wordmark:hover {
+  border-color: var(--black);
+  color: var(--black);
+  transform: translateY(-2px);
+}
 
 /* ---------- Approach cycle ---------- */
 .cycle {
@@ -880,9 +930,49 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   color: var(--black);
   display: grid;
   place-items: center;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1rem;
+  overflow: hidden;
+}
+
+/* ---------- Animated bot avatar (Shimona) ---------- */
+.bot-face {
+  width: 30px;
+  height: 30px;
+  color: var(--black);
+  animation: bot-bob 3s ease-in-out infinite;
+}
+.chat-launcher .bot-face { width: 30px; height: 30px; }
+.bot-face rect,
+.bot-face line,
+.bot-face .bot-smile {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bot-face .bot-eye,
+.bot-face .bot-spark { fill: currentColor; stroke: none; }
+.bot-face .bot-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bot-blink 4.5s ease-in-out infinite;
+}
+.bot-face .bot-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bot-spark 2s ease-in-out infinite;
+}
+@keyframes bot-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1.5px); }
+}
+@keyframes bot-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(0.15); }
+}
+@keyframes bot-spark {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .35; transform: scale(.8); }
 }
 .chat-close {
   margin-left: auto;
@@ -961,6 +1051,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .chat-window { animation: none; }
   .chat-launcher:hover { transform: none; }
+  .bot-face, .bot-face * { animation: none !important; }
 }
 
 @media (max-width: 480px) {
