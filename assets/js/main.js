@@ -91,6 +91,45 @@
     });
   }
 
+  /* Contact form → Web3Forms (AJAX submit with inline success) */
+  var cForm = document.querySelector('.contact-form');
+  if (cForm) {
+    cForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = cForm.querySelector('button[type="submit"]');
+      var note = cForm.querySelector('.form-note');
+      var original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (note) { note.textContent = "I'll respond within 1–2 business days."; note.style.color = ''; }
+
+      fetch(cForm.action, {
+        method: 'POST',
+        body: new FormData(cForm),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.success) {
+            cForm.innerHTML =
+              '<div class="form-success"><h3>Thank you!</h3>' +
+              "<p>I've received your enquiry and will respond within 1&ndash;2 business days.</p></div>";
+          } else {
+            throw new Error('submit failed');
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = original;
+          if (note) {
+            note.textContent =
+              'Something went wrong — please email nishakashyap@thehumanworksco.com directly.';
+            note.style.color = '#c0392b';
+          }
+        });
+    });
+  }
+
   /* Current year in footer */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
