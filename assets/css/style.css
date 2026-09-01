@@ -378,7 +378,15 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   font-size: 1.15rem;
   color: var(--grey-700);
   max-width: 540px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+}
+.hero-note {
+  max-width: 480px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--grey-700);
+  border-left: 3px solid var(--yellow);
+  padding-left: 12px;
 }
 .hero-stats {
   display: flex;
@@ -828,6 +836,77 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .cta-banner h2 { color: var(--white); margin-bottom: 12px; font-size: clamp(1.7rem, 3vw, 2.3rem); }
 .cta-banner p { color: #cfcfcf; font-size: 1.02rem; }
 .cta-banner .cta-row { justify-content: flex-start; }
+
+/* ---------- Proof / manifesto ---------- */
+.proof {
+  max-width: 880px;
+  margin-inline: auto;
+  text-align: center;
+}
+.proof-quote {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.38;
+  color: var(--black);
+  letter-spacing: -0.01em;
+}
+.proof-attr {
+  margin-top: 20px;
+  color: var(--grey-500);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+  max-width: 760px;
+  margin-inline: auto;
+}
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 22px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  flex: none;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--yellow-dark);
+  transition: transform .25s var(--ease);
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: -3px;
+  border-radius: var(--radius-sm);
+}
+.faq-item > p {
+  margin: 0;
+  padding: 0 22px 20px;
+  color: var(--grey-700);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
 
 /* ---------- Footer ---------- */
 .site-footer {
