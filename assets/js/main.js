@@ -48,7 +48,7 @@
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* Journey timeline — grow the line + cascade the milestones into view */
+  /* Journey timeline — cascade the milestone cards into view */
   var timelineEl = document.querySelector('.timeline');
   if (timelineEl) {
     if ('IntersectionObserver' in window) {
@@ -66,6 +66,44 @@
       tio.observe(timelineEl);
     } else {
       timelineEl.classList.add('is-visible');
+    }
+
+    /* Journey timeline — traveling marker follows scroll down the line,
+       lighting up each milestone node as it passes */
+    var tracker = timelineEl.querySelector('.timeline-tracker');
+    var nodes = timelineEl.querySelectorAll('.timeline-node');
+    var trackerTicking = false;
+
+    var updateTracker = function () {
+      trackerTicking = false;
+      var rect = timelineEl.getBoundingClientRect();
+      var anchor = window.innerHeight * 0.55;
+      var progressPx = Math.max(0, Math.min(rect.height, anchor - rect.top));
+
+      timelineEl.style.setProperty('--timeline-fill', progressPx + 'px');
+
+      nodes.forEach(function (node) {
+        var nodeRect = node.getBoundingClientRect();
+        var nodeCenter = (nodeRect.top + nodeRect.height / 2) - rect.top;
+        node.classList.toggle('is-lit', progressPx >= nodeCenter);
+      });
+    };
+
+    var onTrackerScroll = function () {
+      if (!trackerTicking) {
+        window.requestAnimationFrame(updateTracker);
+        trackerTicking = true;
+      }
+    };
+
+    if (tracker) {
+      window.addEventListener('scroll', onTrackerScroll, { passive: true });
+      window.addEventListener('resize', onTrackerScroll);
+      window.addEventListener('load', updateTracker);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(updateTracker);
+      }
+      updateTracker();
     }
   }
 
