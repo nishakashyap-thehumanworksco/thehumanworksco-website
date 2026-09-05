@@ -413,26 +413,24 @@
         <p>Whether you're building your first HR foundation or scaling an established people function — I'm here to help.</p>
       </div>
       <div class="contact-wrap reveal">
-        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_ACCESS_KEY">
-          <input type="hidden" name="subject" value="New enquiry from thehumanworksco.com">
-          <input type="hidden" name="from_name" value="TheHumanWorksCo website">
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+        <form class="contact-form" id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfVBccK9PjAFV5FaGD5m4s3_FY4mQAZRxfQfytw8dYyKBn9_w/formResponse" method="POST" target="hidden_iframe">
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
 
           <div class="form-row">
             <label>Full name <span class="req">*</span>
-              <input type="text" name="Full name" required autocomplete="name">
+              <input type="text" name="entry.1683786841" required autocomplete="name">
             </label>
             <label>Work email <span class="req">*</span>
-              <input type="email" name="Work email" required autocomplete="email">
+              <input type="email" name="entry.1581725248" required autocomplete="email">
             </label>
           </div>
           <div class="form-row">
             <label>Company name <span class="req">*</span>
-              <input type="text" name="Company name" required autocomplete="organization">
+              <input type="text" name="entry.1698401591" required autocomplete="organization">
             </label>
             <label>Startup stage
-              <select name="Startup stage">
+              <select name="entry.832565651">
                 <option value="">Select…</option>
                 <option>Pre-Seed</option>
                 <option>Seed</option>
@@ -444,7 +442,7 @@
             </label>
           </div>
           <label>Service needed
-            <select name="Service needed">
+            <select name="entry.1450436195">
               <option value="">Select…</option>
               <option>Fractional HR Leadership</option>
               <option>People Operations Setup</option>
@@ -455,21 +453,27 @@
             </select>
           </label>
           <label>Tell me more <span class="opt">(optional)</span>
-            <textarea name="Tell me more" rows="4"></textarea>
+            <textarea name="entry.1172782576" rows="4"></textarea>
           </label>
           <fieldset class="form-radios">
             <legend>Preferred contact method</legend>
-            <label class="radio"><input type="radio" name="Preferred contact" value="Email" checked> Email</label>
-            <label class="radio"><input type="radio" name="Preferred contact" value="Phone call"> Phone call</label>
-            <label class="radio"><input type="radio" name="Preferred contact" value="Video meeting"> Video meeting</label>
+            <label class="radio"><input type="radio" name="entry.559397197" value="Email" checked> Email</label>
+            <label class="radio"><input type="radio" name="entry.559397197" value="Phone call"> Phone call</label>
+            <label class="radio"><input type="radio" name="entry.559397197" value="Video meeting"> Video meeting</label>
           </fieldset>
           <label class="checkbox">
-            <input type="checkbox" name="Consent" value="Yes" required>
+            <input type="checkbox" name="entry.827009360" value="I agree to TheHumanWorksCo contacting me about my enquiry." required>
             <span>I agree to TheHumanWorksCo contacting me about my enquiry. <span class="req">*</span></span>
           </label>
           <button type="submit" class="btn btn-primary">Book a Discovery Conversation</button>
           <p class="form-note">I'll respond within 1–2 business days.</p>
         </form>
+
+        <div class="form-success" id="formSuccess" hidden>
+          <span class="icon-badge"><svg><use href="#icon-check-circle"></use></svg></span>
+          <h3>Message sent — thank you!</h3>
+          <p>I'll get back to you within 1–2 business days. Keep an eye on your inbox for a confirmation email.</p>
+        </div>
 
         <aside class="contact-aside">
           <h3>Prefer to grab a time?</h3>

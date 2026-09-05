@@ -107,6 +107,31 @@
     }
   }
 
+  /* Contact form -> Google Form (hidden iframe), swap in a thank-you message */
+  var contactForm = document.getElementById('contactForm');
+  var contactFrame = document.getElementById('hidden_iframe');
+  var formSuccess = document.getElementById('formSuccess');
+  if (contactForm && contactFrame) {
+    var contactSubmitted = false;
+    contactForm.addEventListener('submit', function (e) {
+      var honeypot = contactForm.querySelector('.hp');
+      if (honeypot && honeypot.checked) {
+        e.preventDefault();
+        return;
+      }
+      contactSubmitted = true;
+      var btn = contactForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    });
+    contactFrame.addEventListener('load', function () {
+      if (!contactSubmitted) return;
+      contactSubmitted = false;
+      contactForm.hidden = true;
+      if (formSuccess) formSuccess.hidden = false;
+      formSuccess && formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   /* Back to top */
   var backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
@@ -126,45 +151,6 @@
       var willOpen = heroCountries.hasAttribute('hidden');
       heroCountries.toggleAttribute('hidden', !willOpen);
       statToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-    });
-  }
-
-  /* Contact form → Web3Forms (AJAX submit with inline success) */
-  var cForm = document.querySelector('.contact-form');
-  if (cForm) {
-    cForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = cForm.querySelector('button[type="submit"]');
-      var note = cForm.querySelector('.form-note');
-      var original = btn.textContent;
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      if (note) { note.textContent = "I'll respond within 1–2 business days."; note.style.color = ''; }
-
-      fetch(cForm.action, {
-        method: 'POST',
-        body: new FormData(cForm),
-        headers: { Accept: 'application/json' }
-      })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && data.success) {
-            cForm.innerHTML =
-              '<div class="form-success"><h3>Thank you!</h3>' +
-              "<p>I've received your enquiry and will respond within 1&ndash;2 business days.</p></div>";
-          } else {
-            throw new Error('submit failed');
-          }
-        })
-        .catch(function () {
-          btn.disabled = false;
-          btn.textContent = original;
-          if (note) {
-            note.textContent =
-              'Something went wrong — please email nishakashyap@thehumanworksco.com directly.';
-            note.style.color = '#c0392b';
-          }
-        });
     });
   }
 

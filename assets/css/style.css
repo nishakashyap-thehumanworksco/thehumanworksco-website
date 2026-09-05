@@ -1117,6 +1117,29 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   gap: 16px;
 }
 .contact-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+.form-success {
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: var(--radius-md);
+  padding: 44px 30px;
+  text-align: center;
+}
+.form-success .icon-badge {
+  margin-inline: auto;
+  margin-bottom: 18px;
+  background: var(--yellow);
+}
+.form-success h3 { font-size: 1.3rem; margin-bottom: 10px; }
+.form-success p { color: var(--grey-700); max-width: 360px; margin-inline: auto; }
+.form-success:not([hidden]) { animation: form-success-in .5s var(--ease); }
+@keyframes form-success-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-success:not([hidden]) { animation: none; }
+}
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .contact-form label {
   display: block;
