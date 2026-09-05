@@ -178,40 +178,32 @@
 
   var FAQS = [
     {
-      q: 'What does TheHumanWorksCo do?',
-      a: "We're a fractional People &amp; Culture function for early-stage startups. Nisha Kashyap plugs in as your Head of People &mdash; covering HR strategy, operations, culture, hiring and AI-powered HR systems &mdash; without the cost of a full-time senior hire."
+      q: "I'm hiring my first team",
+      a: 'This is where most founders lose time. I set up a repeatable hiring system &mdash; scorecards, interview structure, offers and onboarding &mdash; plus the contracts and policies you need in place. You hire faster and avoid an early mis-hire. The <strong>People Foundation</strong> package covers exactly this.'
     },
     {
-      q: 'What is "fractional HR"?',
-      a: 'Senior HR leadership on a part-time or project basis. You get 25+ years of global People experience for a few days a month (or a fixed-scope project), scaling up or down as your needs change.'
+      q: "We're scaling quickly",
+      a: 'Fast growth breaks the informal way things worked at 10 people. I build the layer that holds &mdash; manager capability, performance rhythm, org design and pay structure &mdash; so headcount goes up without the culture and delivery dipping. That\'s the <strong>Scale Your People Function</strong> package.'
     },
     {
-      q: 'Who do you work with?',
-      a: 'Founders and leadership teams at pre-seed to Series B startups &mdash; usually from your first hires up to around 150 people.'
+      q: 'We need better managers',
+      a: 'First-time managers rarely get taught how to manage. I coach yours on the hard conversations, set up a light performance and feedback rhythm, and give them a simple playbook. Managers get more confident, and fewer people issues reach your desk.'
     },
     {
-      q: 'What can you help me with?',
-      a: 'Six areas: HR leadership, people operations setup (onboarding, HRIS, policies, payroll), AI-powered HR systems, culture &amp; people experience, hiring &amp; talent support, and one-off projects like compliance audits, restructures or M&amp;A integration.'
+      q: "I'm building a GCC",
+      a: 'I help global companies stand up and scale teams in India &mdash; hiring plan, org structure, compliance, comp benchmarking and culture &mdash; so your India centre performs like the rest of the business, not a back office. See <strong>GCC People Advisory</strong>.'
     },
     {
-      q: 'How does an engagement work?',
-      a: 'Five steps: Immerse (learn your goals) &rarr; Diagnose (assess strengths and gaps) &rarr; Build (lean systems) &rarr; Embed (operate as part of the team) &rarr; Enable (foundations to scale). Engagements run as ongoing retainers or fixed-scope projects.'
+      q: 'Where should I start?',
+      a: 'Book a free 30-minute strategy session. Tell Nisha your stage and biggest people challenge, and you\'ll leave with two or three practical moves &mdash; whether or not you work together. Book at <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> or call <a href="tel:+919100064700">' + PHONE + '</a>.'
     },
     {
-      q: 'Are you a recruitment agency?',
-      a: 'No. On hiring we act as a strategic partner &mdash; role scoping, interview process design, competency frameworks, founder interview coaching and offer strategy &mdash; so you hire right and avoid expensive misfires.'
+      q: 'What is a Fractional Head of People?',
+      a: 'An experienced people leader &mdash; the judgement of a full-time Head of People or Chief People Officer &mdash; working with you a few focused days a month, at a fraction of the cost. Nisha brings 25+ years leading People across 14 countries.'
     },
     {
       q: 'How much does it cost?',
-      a: 'It depends on scope and time commitment. Email Nisha at <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> with where you are and where you\'re headed, and you\'ll get a clear recommendation and quote.'
-    },
-    {
-      q: 'Where are you based?',
-      a: 'India-based, working with founders across time zones. Nisha has led HR teams across 14 countries and for 11,000+ employees.'
-    },
-    {
-      q: 'How do I get started?',
-      a: 'Email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> or call <a href="tel:+919100064700">' + PHONE + '</a>. Tell Nisha your stage and biggest people challenge &mdash; she\'ll take it from there.'
+      a: 'It depends on the days per month you need. Most founders start small on a rolling monthly retainer and scale as they hire. Email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> with where you are and where you\'re headed for a clear number.'
     }
   ];
 
