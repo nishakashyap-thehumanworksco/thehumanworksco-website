@@ -1,16 +1,20 @@
-/* TheHumanWorksCo — shared site behavior (nav toggle, active link, reveal, back-to-top) */
+/* TheHumanWorksCo — shared site behaviour.
+   Content is readable without JS; this only enhances. */
 (function () {
   'use strict';
 
-  /* Mobile nav toggle */
-  var toggle = document.querySelector('.nav-toggle');
+  var root = document.documentElement;
   var body = document.body;
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Mobile nav ---------- */
+  var toggle = document.querySelector('.nav-toggle');
   if (toggle) {
     toggle.addEventListener('click', function () {
       var isOpen = body.classList.toggle('nav-open');
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-
     document.querySelectorAll('.nav-links a').forEach(function (link) {
       link.addEventListener('click', function () {
         body.classList.remove('nav-open');
@@ -19,7 +23,7 @@
     });
   }
 
-  /* Active nav link based on current page */
+  /* ---------- Active nav link ---------- */
   var current = (location.pathname.split('/').pop() || 'index.html');
   document.querySelectorAll('.nav-links a[href]').forEach(function (link) {
     var href = link.getAttribute('href');
@@ -29,139 +33,151 @@
     }
   });
 
-  /* Scroll-reveal */
-  var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && revealEls.length) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-    );
-    revealEls.forEach(function (el) { io.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  /* ---------- Motion vocabulary ----------
+     One observer handles every [data-anim] element. The hero is never
+     gated. Stagger groups get --i on their children. Stat figures count
+     up. Everything unobserves after it fires. */
+  var animEls = Array.prototype.slice.call(document.querySelectorAll('[data-anim]'))
+    .filter(function (el) { return !el.closest('.hero'); });
+
+  function fireCount(el) {
+    el.querySelectorAll('.count-target').forEach(function (num) {
+      var target = parseFloat(num.getAttribute('data-count'));
+      if (isNaN(target)) return;
+      var prefix = num.getAttribute('data-prefix') || '';
+      var suffix = num.getAttribute('data-suffix') || '';
+      var dur = 1100, start = null;
+      function fmt(v) {
+        var r = Math.round(v);
+        return prefix + (r >= 1000 ? r.toLocaleString('en-US') : r) + suffix;
+      }
+      function tick(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        num.textContent = fmt(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+        else num.textContent = fmt(target);
+      }
+      num.textContent = fmt(0);
+      requestAnimationFrame(tick);
+    });
   }
 
-  /* Journey timeline — cascade the milestone cards into view */
+  if (animEls.length) {
+    animEls.forEach(function (el) {
+      if (el.getAttribute('data-anim') === 'stagger') {
+        Array.prototype.forEach.call(el.children, function (child, i) {
+          child.style.setProperty('--i', i);
+        });
+      }
+    });
+
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          el.classList.add('is-in');
+          if (el.getAttribute('data-anim') === 'count') fireCount(el);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+      animEls.forEach(function (el) { io.observe(el); });
+    } else {
+      animEls.forEach(function (el) {
+        el.classList.add('is-in');
+        if (el.getAttribute('data-anim') === 'count') fireCount(el);
+      });
+    }
+  }
+
+  /* ---------- Journey timeline: draw the rail as it scrolls ---------- */
   var timelineEl = document.querySelector('.timeline');
   if (timelineEl) {
     if ('IntersectionObserver' in window) {
-      var tio = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              tio.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
+      var tio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            tio.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
       tio.observe(timelineEl);
     } else {
       timelineEl.classList.add('is-visible');
     }
 
-    /* Journey timeline — traveling marker follows scroll down the line,
-       lighting up each milestone node as it passes */
     var tracker = timelineEl.querySelector('.timeline-tracker');
     var nodes = timelineEl.querySelectorAll('.timeline-node');
-    var trackerTicking = false;
+    var ticking = false;
 
-    var updateTracker = function () {
-      trackerTicking = false;
+    function updateTracker() {
+      ticking = false;
       var rect = timelineEl.getBoundingClientRect();
       var anchor = window.innerHeight * 0.55;
       var progressPx = Math.max(0, Math.min(rect.height, anchor - rect.top));
-
       timelineEl.style.setProperty('--timeline-fill', progressPx + 'px');
-
       nodes.forEach(function (node) {
-        var nodeRect = node.getBoundingClientRect();
-        var nodeCenter = (nodeRect.top + nodeRect.height / 2) - rect.top;
-        node.classList.toggle('is-lit', progressPx >= nodeCenter);
+        var nr = node.getBoundingClientRect();
+        var center = (nr.top + nr.height / 2) - rect.top;
+        node.classList.toggle('is-lit', progressPx >= center);
       });
-    };
-
-    var onTrackerScroll = function () {
-      if (!trackerTicking) {
-        window.requestAnimationFrame(updateTracker);
-        trackerTicking = true;
-      }
-    };
-
-    if (tracker) {
-      window.addEventListener('scroll', onTrackerScroll, { passive: true });
-      window.addEventListener('resize', onTrackerScroll);
-      window.addEventListener('load', updateTracker);
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(updateTracker);
-      }
+    }
+    function onScroll() {
+      if (!ticking) { requestAnimationFrame(updateTracker); ticking = true; }
+    }
+    if (tracker && !reduceMotion) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
       updateTracker();
     }
   }
 
-  /* Contact form -> Google Form (hidden iframe), swap in a thank-you message */
+  /* ---------- Contact form -> hidden iframe, inline confirmation ---------- */
   var contactForm = document.getElementById('contactForm');
   var contactFrame = document.getElementById('hidden_iframe');
   var formSuccess = document.getElementById('formSuccess');
   if (contactForm && contactFrame) {
-    var contactSubmitted = false;
+    var submitted = false;
     contactForm.addEventListener('submit', function (e) {
       var honeypot = contactForm.querySelector('.hp');
-      if (honeypot && honeypot.checked) {
-        e.preventDefault();
-        return;
-      }
-      contactSubmitted = true;
+      if (honeypot && honeypot.checked) { e.preventDefault(); return; }
+      submitted = true;
       var btn = contactForm.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
     });
     contactFrame.addEventListener('load', function () {
-      if (!contactSubmitted) return;
-      contactSubmitted = false;
+      if (!submitted) return;
+      submitted = false;
       contactForm.hidden = true;
-      if (formSuccess) formSuccess.hidden = false;
-      formSuccess && formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (formSuccess) {
+        formSuccess.hidden = false;
+        formSuccess.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      }
     });
   }
 
-  /* Back to top */
+  /* ---------- Back to top ---------- */
   var backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
     window.addEventListener('scroll', function () {
       backToTop.classList.toggle('visible', window.scrollY > 500);
     }, { passive: true });
     backToTop.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
     });
   }
 
-  /* Hero: reveal the country list when the "14 countries" stat is clicked */
-  var statToggle = document.querySelector('.stat-toggle');
-  var heroCountries = document.getElementById('heroCountries');
-  if (statToggle && heroCountries) {
-    statToggle.addEventListener('click', function () {
-      var willOpen = heroCountries.hasAttribute('hidden');
-      heroCountries.toggleAttribute('hidden', !willOpen);
-      statToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-    });
-  }
-
-  /* Current year in footer */
+  /* ---------- Footer year ---------- */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
 })();
 
 
 /* =========================================================
-   FAQ chatbot — "Shimona"
+   Common questions — a fixed list, not an assistant
    ========================================================= */
 (function () {
   'use strict';
@@ -176,38 +192,38 @@
   var EMAIL = 'nishakashyap@thehumanworksco.com';
   var PHONE = '+91 91000 64700';
 
-  var FAQS = [
+  var QAS = [
     {
-      q: "I'm hiring my first team",
-      a: 'This is where most founders lose time. I set up a repeatable hiring system &mdash; scorecards, interview structure, offers and onboarding &mdash; plus the contracts and policies you need in place. You hire faster and avoid an early mis-hire. The <strong>People Foundation</strong> package covers exactly this.'
+      q: 'What exactly do you do?',
+      a: 'People strategy consulting for founders and GCC leaders &mdash; the decisions that compound: hiring, how you organise, who leads, and the systems underneath. Nisha brings 25 years leading People across 14 countries at Infosys, Genpact, Wipro and Designit. Some engagements are ongoing and embedded; most are scoped projects.'
     },
     {
-      q: "We're scaling quickly",
-      a: 'Fast growth breaks the informal way things worked at 10 people. I build the layer that holds &mdash; manager capability, performance rhythm, org design and pay structure &mdash; so headcount goes up without the culture and delivery dipping. That\'s the <strong>Scale Your People Function</strong> package.'
+      q: 'How is this different from an HR consultant?',
+      a: 'A consultant produces a report and leaves. Nisha builds the systems, runs the hard conversations and coaches your managers, working inside your team.'
     },
     {
-      q: 'We need better managers',
-      a: 'First-time managers rarely get taught how to manage. I coach yours on the hard conversations, set up a light performance and feedback rhythm, and give them a simple playbook. Managers get more confident, and fewer people issues reach your desk.'
+      q: 'How does an engagement start?',
+      a: 'A 30-minute discovery call, then a fixed-fee <strong>People Audit</strong>: two to three weeks of interviews and a systems review ending in a written diagnosis, a prioritised plan and the costs.'
     },
     {
-      q: "I'm building a GCC",
-      a: 'I help global companies stand up and scale teams in India &mdash; hiring plan, org structure, compliance, comp benchmarking and culture &mdash; so your India centre performs like the rest of the business, not a back office. See <strong>GCC People Advisory</strong>.'
+      q: 'Who do you work with?',
+      a: 'Founders, CEOs and leadership teams at Pre-Seed to Series B startups and growing SMEs, plus global companies establishing or scaling teams in India.'
     },
     {
-      q: 'Where should I start?',
-      a: 'Book a free 30-minute strategy session. Tell Nisha your stage and biggest people challenge, and you\'ll leave with two or three practical moves &mdash; whether or not you work together. Book at <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> or call <a href="tel:+919100064700">' + PHONE + '</a>.'
-    },
-    {
-      q: 'What is a Fractional Head of People?',
-      a: 'An experienced people leader &mdash; the judgement of a full-time Head of People or Chief People Officer &mdash; working with you a few focused days a month, at a fraction of the cost. Nisha brings 25+ years leading People across 14 countries.'
+      q: 'I’m building a GCC in India',
+      a: 'Nisha helps global companies stand up and scale India teams &mdash; operating model, hiring sequence, leadership bench, compliance and culture &mdash; so the centre performs like the rest of the business.'
     },
     {
       q: 'How much does it cost?',
-      a: 'It depends on the days per month you need. Most founders start small on a rolling monthly retainer and scale as they hire. Email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> with where you are and where you\'re headed for a clear number.'
+      a: 'Every engagement is bespoke. The People Audit is a fixed fee; ongoing work is a monthly retainer, scoped to what you need. You have the numbers before anything starts &mdash; email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> with where you are.'
+    },
+    {
+      q: 'How do I get started?',
+      a: 'Use the form on the site, email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>, or call <a href="tel:+919100064700">' + PHONE + '</a>. Nisha replies within one business day.'
     }
   ];
 
-  var prefersReduced = window.matchMedia &&
+  var reduce = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function addMsg(html, who) {
@@ -220,21 +236,18 @@
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
-  function askFaq(item) {
+  function ask(item) {
     addMsg(item.q, 'user');
-    if (prefersReduced) {
-      addMsg(item.a, 'bot');
-    } else {
-      window.setTimeout(function () { addMsg(item.a, 'bot'); }, 260);
-    }
+    if (reduce) { addMsg(item.a, 'bot'); }
+    else { window.setTimeout(function () { addMsg(item.a, 'bot'); }, 240); }
   }
 
-  FAQS.forEach(function (item) {
+  QAS.forEach(function (item) {
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'chat-faq';
     b.textContent = item.q;
-    b.addEventListener('click', function () { askFaq(item); });
+    b.addEventListener('click', function () { ask(item); });
     faqWrap.appendChild(b);
   });
 
@@ -242,7 +255,7 @@
     win.hidden = !open;
     launcher.classList.toggle('is-open', open);
     launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
-    launcher.setAttribute('aria-label', open ? 'Close chat' : 'Open chat');
+    launcher.setAttribute('aria-label', open ? 'Close' : 'Common questions');
     if (open) { closeBtn.focus(); }
   }
 
@@ -251,6 +264,4 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !win.hidden) { setOpen(false); launcher.focus(); }
   });
-
-  if (location.hash === '#chat') { setOpen(true); }
 })();
