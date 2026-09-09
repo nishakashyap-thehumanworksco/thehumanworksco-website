@@ -20,7 +20,7 @@
   --grey-300: #e2e2e2;
   --grey-100: #f2f2f0;
 
-  --font-display: "Archivo Expanded", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Anton", "Archivo Expanded", "Helvetica Neue Condensed", "Arial Narrow", sans-serif;
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --container: 1180px;
@@ -59,13 +59,26 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.02em;
+  font-weight: 400;             /* Anton ships a single weight */
+  line-height: 1.02;
+  letter-spacing: 0.005em;
   color: var(--black);
   text-wrap: balance;
+  -webkit-font-smoothing: antialiased;
 }
-h3, h4 { line-height: 1.12; }
+h3, h4 { line-height: 1.1; }
+/* Anton is display-only — keep smaller / text-heavy headings on the body face */
+.brand-name,
+.faq-item summary,
+.process-body h3,
+.timeline-item .year,
+.timeline-item .role,
+.chat-header strong,
+.testimonial .t-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
 
 p { max-width: 68ch; }
 .card p, .cta-banner p, .contact-aside p, td p, .section-closer,
@@ -111,7 +124,7 @@ p { max-width: 68ch; }
 }
 
 .section-head h2 {
-  font-size: clamp(30px, 4.6vw, 54px);
+  font-size: clamp(32px, 5vw, 62px);
   margin-bottom: 16px;
 }
 
@@ -390,7 +403,8 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   align-items: center;
 }
 .hero h1 {
-  font-size: clamp(44px, 7vw, 92px);
+  font-size: clamp(46px, 8vw, 104px);
+  line-height: 1.02;
   margin-bottom: 26px;
 }
 .hero p.lead {
