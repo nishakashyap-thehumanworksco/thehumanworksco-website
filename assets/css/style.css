@@ -1995,11 +1995,14 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .article {
   max-width: 720px;
   margin-inline: auto;
+  color: #141414;
 }
 .article > * { max-width: none; }
-.article h2 { font-size: clamp(24px, 3vw, 34px); margin: 44px 0 14px; }
-.article h3 { font-size: 1.2rem; margin: 32px 0 10px; }
-.article p { margin-bottom: 20px; font-size: 1.08rem; }
+.article h2 { font-size: clamp(24px, 3vw, 34px); margin: 44px 0 14px; color: var(--black); }
+.article h3 { font-size: 1.2rem; margin: 32px 0 10px; color: var(--black); }
+.article p, .article li { margin-bottom: 20px; font-size: 1.08rem; color: #141414; }
+.article strong { color: var(--black); }
+.article em { color: var(--black); font-style: italic; }
 .article ul:not(.check-list) { margin: 0 0 20px 1.1em; list-style: disc; }
 .article ul:not(.check-list) li { margin-bottom: 8px; }
 .article .pull-quote {
@@ -2014,11 +2017,11 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .article-meta {
   font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--grey-500);
+  color: var(--yellow-ink);
   margin-bottom: 12px;
 }
 
@@ -2058,9 +2061,14 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   padding: 26px 4px;
   transition: background .15s var(--ease), padding-left .15s var(--ease);
 }
-.note-list a:hover { background: var(--off-white); padding-left: 14px; }
-.note-list h2 { font-size: 1.35rem; margin-bottom: 6px; }
-.note-list .article-meta { margin: 0; }
+.note-list a:hover,
+.note-list a:focus-visible {
+  background: var(--sand);
+  box-shadow: inset 5px 0 0 var(--yellow);
+  padding-left: 18px;
+}
+.note-list h2 { font-size: 1.45rem; margin-bottom: 6px; color: var(--black); }
+.note-list .article-meta { margin: 0 0 4px; }
 
 /* Simple redirect page */
 .redirect-note { text-align: center; padding: 120px 24px; font-size: 1.1rem; }
