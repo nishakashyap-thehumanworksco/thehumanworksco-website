@@ -20,7 +20,7 @@
   --grey-300: #e2e2e2;
   --grey-100: #f2f2f0;
 
-  --font-display: "Anton", "Archivo Expanded", "Helvetica Neue Condensed", "Arial Narrow", sans-serif;
+  --font-display: "Archivo Expanded", "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --container: 1180px;
@@ -59,26 +59,14 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 400;             /* Anton ships a single weight */
-  line-height: 1.02;
-  letter-spacing: 0.005em;
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   color: var(--black);
   text-wrap: balance;
   -webkit-font-smoothing: antialiased;
 }
-h3, h4 { line-height: 1.1; }
-/* Anton is display-only — keep smaller / text-heavy headings on the body face */
-.brand-name,
-.faq-item summary,
-.process-body h3,
-.timeline-item .year,
-.timeline-item .role,
-.chat-header strong,
-.testimonial .t-name {
-  font-family: var(--font-body);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
+h3, h4 { line-height: 1.12; }
 
 p { max-width: 68ch; }
 .card p, .cta-banner p, .contact-aside p, td p, .section-closer,
@@ -124,7 +112,7 @@ p { max-width: 68ch; }
 }
 
 .section-head h2 {
-  font-size: clamp(32px, 5vw, 62px);
+  font-size: clamp(30px, 4.6vw, 54px);
   margin-bottom: 16px;
 }
 
@@ -398,13 +386,12 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 60px;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 56px;
   align-items: center;
 }
 .hero h1 {
-  font-size: clamp(46px, 8vw, 104px);
-  line-height: 1.02;
+  font-size: clamp(44px, 7vw, 92px);
   margin-bottom: 26px;
 }
 .hero p.lead {
@@ -506,15 +493,17 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .hero-visual {
   position: relative;
   align-self: center;
-  padding: 0 22px 22px 0;
+  max-width: 300px;
+  margin-left: auto;
+  padding: 0 16px 16px 0;
 }
 .hero-visual::before {
   content: "";
   position: absolute;
   right: 0;
   bottom: 0;
-  width: calc(100% - 22px);
-  height: calc(100% - 22px);
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
   background: var(--yellow);
   z-index: 0;
 }
@@ -1537,28 +1526,27 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 
 /* The signature move: the yellow wipe behind a key phrase.
-   box-decoration-break keeps the block intact if the phrase wraps. */
+   Painted as a background so it survives line wraps (box-decoration-break
+   clones it onto every wrapped fragment); the wipe animates the width. */
 .hl {
-  position: relative;
-  z-index: 0;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-.hl::before {
-  content: "";
-  position: absolute;
-  inset: 0.08em -0.12em 0.04em;
-  background: var(--yellow);
-  z-index: -1;
-  transform: scaleX(1);
-  transform-origin: left center;
+  background-image: linear-gradient(var(--yellow), var(--yellow));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% 82%;
+  padding: 0 0.08em;
+  margin: 0 -0.08em;
 }
 .bg-black .hl { color: var(--black); }
 @media (prefers-reduced-motion: no-preference) {
-  .js .hl::before { transform: scaleX(0); transition: transform .42s cubic-bezier(.22,1,.36,1); }
-  .js [data-anim="wipe"].is-in .hl::before,
-  .js .hero .hl::before { transform: scaleX(1); }
-  .js .hero .hl::before { transition-delay: .35s; }
+  .js .hl {
+    background-size: 0% 82%;
+    transition: background-size .42s cubic-bezier(.22,1,.36,1);
+  }
+  .js [data-anim="wipe"].is-in .hl,
+  .js .hero .hl { background-size: 100% 82%; }
+  .js .hero .hl { transition-delay: .35s; }
 }
 
 /* Stat count-up: figure holds space, JS ticks the number */
@@ -2114,7 +2102,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
     scroll-behavior: auto !important;
   }
   [data-anim], [data-anim] > * { opacity: 1 !important; transform: none !important; }
-  .hl::before { transform: scaleX(1) !important; }
+  .hl { background-size: 100% 82% !important; }
   .marquee-track { animation: none !important; }
   .timeline-tracker { display: none; }
 }
