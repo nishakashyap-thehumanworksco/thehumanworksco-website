@@ -220,11 +220,9 @@
         <h2>The <span class="hl">People Engine</span>, in 28 seconds</h2>
       </div>
       <div class="film-stage">
-        <canvas id="peopleEngineFilm" width="1920" height="1080" aria-label="Animated brand film: people problems pile up on the founder, then TheHumanWorksCo organises them into a people engine — the model, the process, the track record, and the promise."></canvas>
-        <button class="film-toggle" id="filmToggle" type="button" aria-label="Pause film">
-          <svg id="filmIconPause" class="film-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-          <svg id="filmIconPlay" class="film-icon film-icon-hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
-        </button>
+        <video controls playsinline preload="metadata" width="1920" height="1080" aria-label="The People Engine — a 28-second brand film for TheHumanWorksCo, with sound">
+          <source src="assets/images/TheHumanWorksCo-People-Engine.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </section>
@@ -767,6 +765,5 @@
 </a>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/film-engine.js" defer></script>
 </body>
 </html>

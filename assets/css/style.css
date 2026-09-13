@@ -509,30 +509,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   background: #0D0D0D;
   box-shadow: 8px 8px 0 var(--yellow);
 }
-.film-stage canvas { display: block; width: 100%; height: 100%; }
-.film-toggle {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--yellow);
-  color: var(--black);
-  border: 2px solid var(--black);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  padding: 0;
-  transition: transform .15s var(--ease);
-}
-.film-toggle:hover, .film-toggle:focus-visible { transform: scale(1.08); }
-.film-toggle svg { width: 18px; height: 18px; }
-.film-icon-hidden { display: none; }
-@media (max-width: 560px) {
-  .film-toggle { width: 38px; height: 38px; right: 12px; bottom: 12px; }
-  .film-toggle svg { width: 15px; height: 15px; }
-}
+.film-stage video { display: block; width: 100%; height: 100%; }
 
 /* ---------- Cards ---------- */
 .grid {
@@ -1497,22 +1474,6 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .page-header .eyebrow { color: var(--yellow); }
 .page-header h1 { color: var(--white); font-size: clamp(40px, 6vw, 76px); margin-bottom: 18px; max-width: 16ch; }
 .page-header p { color: #cfcfcf; max-width: 60ch; font-size: 1.1rem; }
-
-/* ---------- Media frame (gif/video showcase) ---------- */
-.media-frame {
-  max-width: 900px;
-  margin-inline: auto;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--grey-300);
-}
-.media-frame video,
-.media-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 
 /* ---------- Motion system ----------
    Content is visible by default. Only when JS has confirmed itself
