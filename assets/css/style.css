@@ -610,26 +610,42 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   background: var(--white);
 }
 
+.marquee-band {
+  background: var(--black);
+  border-block: 3px solid var(--yellow);
+  padding-block: 30px 26px;
+}
+.marquee-eyebrow {
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  padding-left: 0;
+  margin: 0 0 16px;
+  color: var(--yellow);
+}
+.marquee-eyebrow::before { display: none; }
 .marquee {
   overflow: hidden;
-  border-block: 2px solid var(--black);
-  padding-block: 16px;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 .marquee-track {
   display: flex;
-  gap: 56px;
+  gap: 28px;
   width: max-content;
   align-items: center;
 }
 .marquee-track span {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   letter-spacing: 0.01em;
-  color: var(--black);
+  color: var(--white);
   white-space: nowrap;
+}
+.marquee-track .dot {
+  font-size: 0.6rem;
+  color: var(--yellow);
 }
 @media (prefers-reduced-motion: no-preference) {
   .marquee-track { animation: marquee 28s linear infinite; }
