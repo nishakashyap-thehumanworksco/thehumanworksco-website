@@ -190,7 +190,7 @@
   if (!launcher || !win || !closeBtn || !faqWrap || !chatBody) { return; }
 
   var EMAIL = 'nishakashyap@thehumanworksco.com';
-  var PHONE = '+91 91000 64700';
+  var WHATSAPP = 'https://wa.me/918019229111';
 
   var QAS = [
     {
@@ -219,7 +219,7 @@
     },
     {
       q: 'How do I get started?',
-      a: 'Use the form on the site, email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>, or call <a href="tel:+919100064700">' + PHONE + '</a>. Nisha replies within one business day.'
+      a: 'Use the form on the site, email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>, or message on <a href="' + WHATSAPP + '" target="_blank" rel="noopener">WhatsApp</a>. Nisha replies within one business day.'
     }
   ];
 
