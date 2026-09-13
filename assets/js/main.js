@@ -170,6 +170,15 @@
     });
   }
 
+  /* ---------- Brand film videos: block the casual right-click/drag
+     save paths. Not real protection — anyone can still screen-record
+     or pull the file from network requests — just removes the
+     one-click "Save video as" affordance. ---------- */
+  document.querySelectorAll('.protected-video').forEach(function (v) {
+    v.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    v.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  });
+
   /* ---------- Footer year ---------- */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
