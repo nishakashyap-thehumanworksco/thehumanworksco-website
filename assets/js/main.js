@@ -158,6 +158,26 @@
     });
   });
 
+  /* ---------- Article filters (articles.html) ---------- */
+  var filterPills = Array.prototype.slice.call(document.querySelectorAll('.filter-pill'));
+  var articleCards = Array.prototype.slice.call(document.querySelectorAll('.article-card'));
+  var articleEmpty = document.querySelector('.article-empty');
+  if (filterPills.length && articleCards.length) {
+    filterPills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        filterPills.forEach(function (p) { p.classList.toggle('is-active', p === pill); });
+        var visible = 0;
+        articleCards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.hidden = !match;
+          if (match) visible++;
+        });
+        if (articleEmpty) { articleEmpty.hidden = visible !== 0; }
+      });
+    });
+  }
+
   /* ---------- Footer year ---------- */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }

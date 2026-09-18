@@ -1916,22 +1916,62 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   padding: 1px 6px;
 }
 
-/* Notes index list */
-.note-list { max-width: 760px; margin-inline: auto; display: grid; gap: 0; border-top: 2px solid var(--black); }
-.note-list li { border-bottom: 2px solid var(--black); }
-.note-list a {
+/* ---------- Articles: filter pills + card grid ---------- */
+.article-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  color: var(--grey-700);
+  cursor: pointer;
+  transition: background .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
+}
+.filter-pill span { font-variant-numeric: tabular-nums; color: var(--grey-500); font-weight: 600; }
+.filter-pill:hover, .filter-pill:focus-visible { border-color: var(--black); color: var(--black); }
+.filter-pill.is-active { background: var(--black); border-color: var(--black); color: var(--white); }
+.filter-pill.is-active span { color: var(--grey-300); }
+
+.article-card {
   display: block;
-  padding: 26px 4px;
-  transition: background .15s var(--ease), padding-left .15s var(--ease);
+  text-decoration: none;
+  color: inherit;
 }
-.note-list a:hover,
-.note-list a:focus-visible {
-  background: var(--sand);
-  box-shadow: inset 5px 0 0 var(--yellow);
-  padding-left: 18px;
+.article-card .article-meta { margin-bottom: 10px; }
+.article-card h2 {
+  font-size: 1.2rem;
+  line-height: 1.28;
+  margin-bottom: 10px;
+  color: var(--black);
 }
-.note-list h2 { font-size: 1.45rem; margin-bottom: 6px; color: var(--black); }
-.note-list .article-meta { margin: 0 0 4px; }
+.article-card > p:not(.article-meta) {
+  color: var(--grey-700);
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+.article-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--grey-500);
+  padding-top: 14px;
+  border-top: 1px solid var(--grey-300);
+}
+.article-card[hidden] { display: none; }
+.article-empty { color: var(--grey-500); padding: 8px 4px 0; }
 
 /* Simple redirect page */
 .redirect-note { text-align: center; padding: 120px 24px; font-size: 1.1rem; }
