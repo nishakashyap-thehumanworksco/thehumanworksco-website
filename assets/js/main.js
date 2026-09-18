@@ -136,6 +136,28 @@
     v.addEventListener('dragstart', function (e) { e.preventDefault(); });
   });
 
+  /* ---------- Brand film videos: hold the last frame and offer a
+     replay button instead of going blank when playback ends. ---------- */
+  document.querySelectorAll('.film-stage').forEach(function (stage) {
+    var video = stage.querySelector('video');
+    var replay = stage.querySelector('.film-replay');
+    if (!video || !replay) return;
+    video.addEventListener('ended', function () {
+      if (video.duration && isFinite(video.duration)) {
+        video.currentTime = Math.max(0, video.duration - 0.1);
+      }
+      replay.classList.add('is-visible');
+    });
+    replay.addEventListener('click', function () {
+      replay.classList.remove('is-visible');
+      video.currentTime = 0;
+      video.play();
+    });
+    video.addEventListener('play', function () {
+      replay.classList.remove('is-visible');
+    });
+  });
+
   /* ---------- Footer year ---------- */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }

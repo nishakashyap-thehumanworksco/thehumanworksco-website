@@ -510,6 +510,41 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   box-shadow: 8px 8px 0 var(--yellow);
 }
 .film-stage video { display: block; width: 100%; height: 100%; }
+.film-replay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(13, 13, 13, 0.55);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.film-replay.is-visible { display: flex; }
+.film-replay-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 3px solid var(--black);
+  display: grid;
+  place-items: center;
+  transition: transform .15s var(--ease);
+}
+.film-replay:hover .film-replay-icon, .film-replay:focus-visible .film-replay-icon { transform: scale(1.08); }
+.film-replay-icon svg { width: 30px; height: 30px; color: var(--black); }
+.film-replay-label {
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .film-replay:hover .film-replay-icon, .film-replay:focus-visible .film-replay-icon { transform: none; }
+}
 
 /* ---------- Cards ---------- */
 .grid {
