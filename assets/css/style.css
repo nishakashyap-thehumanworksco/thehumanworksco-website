@@ -121,11 +121,6 @@ p { max-width: 68ch; }
   color: var(--grey-700);
 }
 
-.section-head.center {
-  margin-inline: auto;
-  text-align: center;
-}
-
 section { padding: 88px 0; }
 section.tight { padding: 56px 0; }
 
@@ -497,7 +492,6 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 
 /* Brand film — the canvas-drawn "People Engine" piece, framed like a
    screening: black stage, yellow offset shadow, one play/pause control. */
-.film-section { text-align: center; }
 .film-stage {
   position: relative;
   max-width: 920px;
