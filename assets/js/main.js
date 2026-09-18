@@ -92,49 +92,6 @@
     }
   }
 
-  /* ---------- Journey timeline: draw the rail as it scrolls ---------- */
-  var timelineEl = document.querySelector('.timeline');
-  if (timelineEl) {
-    if ('IntersectionObserver' in window) {
-      var tio = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            tio.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2 });
-      tio.observe(timelineEl);
-    } else {
-      timelineEl.classList.add('is-visible');
-    }
-
-    var tracker = timelineEl.querySelector('.timeline-tracker');
-    var nodes = timelineEl.querySelectorAll('.timeline-node');
-    var ticking = false;
-
-    function updateTracker() {
-      ticking = false;
-      var rect = timelineEl.getBoundingClientRect();
-      var anchor = window.innerHeight * 0.55;
-      var progressPx = Math.max(0, Math.min(rect.height, anchor - rect.top));
-      timelineEl.style.setProperty('--timeline-fill', progressPx + 'px');
-      nodes.forEach(function (node) {
-        var nr = node.getBoundingClientRect();
-        var center = (nr.top + nr.height / 2) - rect.top;
-        node.classList.toggle('is-lit', progressPx >= center);
-      });
-    }
-    function onScroll() {
-      if (!ticking) { requestAnimationFrame(updateTracker); ticking = true; }
-    }
-    if (tracker && !reduceMotion) {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-      updateTracker();
-    }
-  }
-
   /* ---------- Contact form -> hidden iframe, inline confirmation ---------- */
   var contactForm = document.getElementById('contactForm');
   var contactFrame = document.getElementById('hidden_iframe');
@@ -204,7 +161,7 @@
   var QAS = [
     {
       q: 'What exactly do you do?',
-      a: 'People strategy consulting for founders and GCC leaders &mdash; the decisions that compound: hiring, how you organise, who leads, and the systems underneath. Nisha brings 25 years leading People across 14 countries at Infosys, Genpact, Wipro and Designit. Some engagements are ongoing and embedded; most are scoped projects.'
+      a: 'People strategy consulting for founders and GCC leaders &mdash; the decisions that compound: hiring, how you organise, who leads, and the systems underneath. Nisha brings 25 years leading People at Infosys, Genpact, Wipro, Wipro Digital and Designit, including an integration across 14 countries. Some engagements are ongoing and embedded; most are scoped projects.'
     },
     {
       q: 'How is this different from an HR consultant?',
