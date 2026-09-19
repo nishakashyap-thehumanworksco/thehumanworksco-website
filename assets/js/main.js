@@ -303,3 +303,145 @@
     if (e.key === 'Escape' && !win.hidden) { setOpen(false); launcher.focus(); }
   });
 })();
+
+
+/* ---------- Hero headline: typed in, with a caret and key sounds ----------
+   The full sentence stays in the DOM (and in aria-label), so search engines,
+   screen readers and no-JS visitors get the plain heading. Browsers block
+   audio until the visitor interacts, so key sounds start after the first tap
+   or click, and the "Replay with sound" button plays the whole thing. */
+(function () {
+  'use strict';
+  var h1 = document.querySelector('h1[data-type]');
+  if (!h1) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
+
+  // wrap every visible character, keeping the .ln / .hl structure intact
+  var chars = [];
+  (function wrap(node) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+      if (n.nodeType === 3) {
+        if (!n.parentNode.classList || n.parentNode === h1) return;   // spaces between lines
+        var frag = document.createDocumentFragment();
+        n.textContent.split('').forEach(function (c) {
+          var sp = document.createElement('span');
+          sp.className = 'ch';
+          sp.textContent = c;
+          frag.appendChild(sp);
+          chars.push(sp);
+        });
+        n.parentNode.replaceChild(frag, n);
+      } else if (n.nodeType === 1) {
+        wrap(n);
+      }
+    });
+  })(h1);
+
+  var hl = h1.querySelector('.hl');
+  var caret = document.createElement('span');
+  caret.className = 'type-caret';
+  caret.setAttribute('aria-hidden', 'true');
+
+  // ---- sound: a short synthesised key click, no audio files ----
+  var AC = window.AudioContext || window.webkitAudioContext;
+  var actx = null, noise = null;
+  function audio() {
+    if (!AC) return null;
+    if (!actx) {
+      actx = new AC();
+      noise = actx.createBuffer(1, Math.floor(actx.sampleRate * 0.06), actx.sampleRate);
+      var d = noise.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+    }
+    return actx;
+  }
+  function key(isSpace) {
+    var a = actx;
+    if (!a || a.state !== 'running') return;
+    var t = a.currentTime;
+    var src = a.createBufferSource(); src.buffer = noise;
+    var bp = a.createBiquadFilter(); bp.type = 'bandpass';
+    bp.frequency.value = isSpace ? 900 : 1700 + Math.random() * 1500; bp.Q.value = 0.9;
+    var g = a.createGain();
+    g.gain.setValueAtTime(isSpace ? 0.22 : 0.15, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+    src.connect(bp); bp.connect(g); g.connect(a.destination);
+    src.start(t); src.stop(t + 0.06);
+    var o = a.createOscillator(); o.type = 'triangle';
+    o.frequency.setValueAtTime(isSpace ? 120 : 170 + Math.random() * 50, t);
+    o.frequency.exponentialRampToValueAtTime(60, t + 0.04);
+    var g2 = a.createGain();
+    g2.gain.setValueAtTime(0.07, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    o.connect(g2); g2.connect(a.destination);
+    o.start(t); o.stop(t + 0.06);
+  }
+  function unlock() {
+    var a = audio();
+    if (a && a.state === 'suspended') a.resume();
+  }
+  window.addEventListener('pointerdown', unlock, { once: true });
+  window.addEventListener('keydown', unlock, { once: true });
+
+  // ---- typing ----
+  var timer = null, running = false;
+  function paintHighlight(ch) {
+    if (!hl) return;
+    if (!ch || !hl.contains(ch)) return;
+    var w = ch.getBoundingClientRect().right - hl.getBoundingClientRect().left;
+    hl.style.backgroundSize = Math.max(0, w) + 'px 82%';
+  }
+  function finish() {
+    running = false;
+    h1.classList.remove('is-typing');
+    if (hl) { hl.style.backgroundSize = ''; hl.style.transition = ''; }
+    if (btn) btn.disabled = false;
+    setTimeout(function () { caret.classList.add('is-done'); }, 3200);
+  }
+  function type(delay) {
+    clearTimeout(timer);
+    running = true;
+    chars.forEach(function (c) { c.classList.remove('on'); });
+    caret.classList.remove('is-done');
+    h1.classList.add('is-typing');
+    if (hl) { hl.style.transition = 'none'; hl.style.backgroundSize = '0px 82%'; }
+    if (btn) btn.disabled = true;
+    var i = 0;
+    var first = chars[0];
+    first.parentNode.insertBefore(caret, first);
+    function step() {
+      if (i >= chars.length) { finish(); return; }
+      var c = chars[i];
+      c.classList.add('on');
+      c.parentNode.insertBefore(caret, c.nextSibling);
+      paintHighlight(c);
+      var isSpace = c.textContent === ' ';
+      key(isSpace);
+      i++;
+      var next = chars[i];
+      var lineBreak = next && next.closest('.ln') !== c.closest('.ln');
+      var wait = lineBreak ? 380 : isSpace ? 110 : 55 + Math.random() * 45;
+      timer = setTimeout(step, wait);
+    }
+    timer = setTimeout(step, delay);
+  }
+
+  // ---- "Replay with sound" ----
+  var btn = null;
+  var eyebrow = h1.parentNode.querySelector('.eyebrow');
+  if (eyebrow && AC) {
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'type-replay';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Replay with sound';
+    btn.addEventListener('click', function () {
+      unlock();
+      type(150);
+    });
+    eyebrow.parentNode.insertBefore(btn, eyebrow.nextSibling);
+  }
+
+  type(550);
+})();
