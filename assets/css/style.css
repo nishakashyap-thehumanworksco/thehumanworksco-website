@@ -429,6 +429,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .type-replay:hover { color: var(--black); }
 .type-replay:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
 .type-replay[disabled] { opacity: .5; cursor: default; }
+.type-replay[hidden] { display: none; }
 @media (max-width: 600px) { .type-replay { display: flex; width: max-content; margin: 10px 0 2px; } }
 
 /* Hero with portrait: headline on the left, square photo on the right */
@@ -752,20 +753,6 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 @keyframes marquee {
   to { transform: translateX(-50%); }
 }
-/* Logos in the career strip: shown in white on the black band */
-.marquee-track .mq-item { display: inline-flex; align-items: center; gap: 14px; }
-.marquee-track .mq-logo { display: block; height: 30px; width: auto; filter: brightness(0) invert(1); }
-.marquee-track .mq-logo-wipro { height: 50px; }
-.marquee-track .mq-logo-genpact { height: 38px; }
-.marquee-track .mq-logo-designit { height: 23px; }
-.marquee-track .mq-role {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: .95rem;
-  letter-spacing: 0;
-  color: rgba(255, 255, 255, .72);
-}
-
 /* ---------- Approach cycle ---------- */
 .cycle {
   display: grid;

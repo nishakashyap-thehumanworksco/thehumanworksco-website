@@ -397,7 +397,7 @@
     running = false;
     h1.classList.remove('is-typing');
     if (hl) { hl.style.backgroundSize = ''; hl.style.transition = ''; }
-    if (btn) btn.disabled = false;
+    if (btn) { btn.disabled = false; btn.hidden = false; }
     setTimeout(function () { caret.classList.add('is-done'); }, 3200);
   }
   function type(delay) {
@@ -436,6 +436,7 @@
     btn.type = 'button';
     btn.className = 'type-replay';
     btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Replay with sound';
+    btn.hidden = true;   // nothing to "replay" until the first pass finishes
     btn.addEventListener('click', function () {
       unlock();
       type(150);
