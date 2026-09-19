@@ -1152,11 +1152,12 @@ h1.h1-lines { max-width: none; }
   position: relative;
   background: var(--yellow);
   color: var(--black);
-  border-radius: var(--radius-md);
-  max-width: 560px;
+  border-radius: 22px;
+  max-width: 460px;
   margin: 0 auto;
   padding: 44px 40px;
   text-align: center;
+  box-shadow: 9px 9px 0 var(--black);
 }
 .book-direct h3 { font-size: 1.3rem; margin-bottom: 10px; }
 .book-direct > p { color: var(--yellow-ink); font-size: 0.98rem; margin-bottom: 26px; max-width: 42ch; margin-inline: auto; }
@@ -1177,31 +1178,33 @@ h1.h1-lines { max-width: none; }
 }
 .link-btn:hover, .link-btn:focus-visible { color: var(--ink-soft, #333); }
 
-/* "Running" marching-ants border — draws attention to the primary CTA card */
+/* "Running" marching-ants border — draws attention to the primary CTA card.
+   Rounded corners deliberately more generous than the card's own radius so
+   the dashes read as a distinct, curvy frame around it. */
 .marching-border {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
   pointer-events: none;
 }
 .marching-border rect {
   fill: none;
   stroke: var(--black);
   stroke-width: 3;
-  stroke-dasharray: 10 7;
+  stroke-dasharray: 10 8;
   animation: marching-ants 1.4s linear infinite;
 }
-@keyframes marching-ants { to { stroke-dashoffset: -34; } }
+@keyframes marching-ants { to { stroke-dashoffset: -36; } }
 @media (prefers-reduced-motion: reduce) {
   .marching-border rect { animation: none; }
 }
 
 .contact-direct-row {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
   margin-top: 30px;
   padding-top: 26px;
   border-top: 2px solid rgba(13, 13, 13, .18);
@@ -1209,15 +1212,18 @@ h1.h1-lines { max-width: none; }
 .contact-direct-row a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: var(--black);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 800;
   transition: opacity .2s var(--ease);
 }
 .contact-direct-row a:hover { opacity: .65; }
-.contact-direct-row a svg { width: 16px; height: 16px; stroke: var(--black); fill: none; stroke-width: 2.4; }
-.contact-direct-row a svg.ico-fill { fill: var(--black); stroke: none; }
+.contact-direct-row a svg { width: 18px; height: 18px; stroke-width: 2.4; }
+/* Real brand colours, so each one reads at a glance */
+.contact-direct-row a.is-mail svg { fill: none; stroke: #EA4335; }
+.contact-direct-row a.is-whatsapp svg { fill: #25D366; stroke: none; }
+.contact-direct-row a.is-linkedin svg.ico-fill { fill: #0A66C2; stroke: none; }
 
 /* ---------- Contact modal ---------- */
 .modal-overlay {
