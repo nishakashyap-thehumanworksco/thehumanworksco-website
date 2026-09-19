@@ -580,92 +580,97 @@
         <h2>Book a discovery call</h2>
         <p>Tell me where you are and where you're headed. I'll reply within one business day.</p>
       </div>
-      <div class="contact-wrap" data-anim="rise">
-        <!-- Contact form posts to a Google Form via the hidden iframe below; the
-             option values in the two <select>s must match the Google Form's own
-             options exactly or those fields arrive blank. -->
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" title="form target"></iframe>
-        <form class="contact-form" id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfVBccK9PjAFV5FaGD5m4s3_FY4mQAZRxfQfytw8dYyKBn9_w/formResponse" method="POST" target="hidden_iframe">
-          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
 
-          <div class="form-row">
-            <label>Full name <span class="req">*</span>
-              <input type="text" name="entry.1683786841" required autocomplete="name">
-            </label>
-            <label>Work email <span class="req">*</span>
-              <input type="email" name="entry.1581725248" required autocomplete="email">
-            </label>
-          </div>
-          <div class="form-row">
-            <label>Company name <span class="req">*</span>
-              <input type="text" name="entry.1698401591" required autocomplete="organization">
-            </label>
-            <label>Startup stage
-              <select name="entry.832565651">
-                <option value="">Select…</option>
-                <option>Pre-Seed</option>
-                <option>Seed</option>
-                <option>Series A</option>
-                <option>Series B</option>
-                <option>Growth Stage</option>
-                <option>Other</option>
-              </select>
-            </label>
-          </div>
-          <label>What's on your mind?
-            <select name="entry.1450436195">
-              <option value="">Select…</option>
-              <option>Fractional HR Leadership</option>
-              <option>People Operations Setup</option>
-              <option>AI-Powered HR Systems</option>
-              <option>Culture &amp; People Experience</option>
-              <option>Hiring &amp; Talent Support</option>
-              <option>Project-Based Support</option>
-            </select>
-          </label>
-          <label>Tell me more <span class="opt">(optional)</span>
-            <textarea name="entry.1172782576" rows="4"></textarea>
-          </label>
-          <fieldset class="form-radios">
-            <legend>Preferred contact method</legend>
-            <label class="radio"><input type="radio" name="entry.559397197" value="Email" checked> Email</label>
-            <label class="radio"><input type="radio" name="entry.559397197" value="Phone call"> Phone call</label>
-            <label class="radio"><input type="radio" name="entry.559397197" value="Video meeting"> Video meeting</label>
-          </fieldset>
-          <label class="checkbox">
-            <input type="checkbox" name="entry.827009360" value="I agree to TheHumanWorksCo contacting me about my enquiry." required>
-            <span>I agree to TheHumanWorksCo contacting me about my enquiry. <span class="req">*</span></span>
-          </label>
-          <button type="submit" class="btn btn-primary">Book a discovery call</button>
-          <p class="form-note">A 30-minute discovery call. Reply within one business day.</p>
-        </form>
-
-        <div class="form-success" id="formSuccess" hidden>
-          <span class="icon-badge"><svg><use href="#icon-check-circle"></use></svg></span>
-          <h3>Got it — thank you.</h3>
-          <p>I'll reply within one business day to find a time.</p>
-        </div>
-
-        <aside class="contact-aside">
-          <h3>Prefer to book directly?</h3>
-          <p>Pick a 30-minute slot straight from my calendar. You'll leave with two or three observations to act on.</p>
-          <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2bKsu9T7fMVNkzo_cDG_so5olPQaL9BV-gv_jCQNnJyfTuh_2C4NntNvZ7SZkaTEWo9ETgDniN" class="btn btn-dark" target="_blank" rel="noopener">Book a time <svg><use href="#icon-arrow-right"></use></svg></a>
-          <div class="contact-direct">
-            <a href="mailto:nishakashyap@thehumanworksco.com"><svg><use href="#icon-mail"></use></svg>nishakashyap@thehumanworksco.com</a>
-            <a href="https://wa.me/918019229111" target="_blank" rel="noopener"><svg><use href="#icon-whatsapp"></use></svg>WhatsApp</a>
-            <a href="https://www.linkedin.com/company/thehumanworksco/" target="_blank" rel="noopener"><svg class="ico-fill"><use href="#icon-linkedin"></use></svg>linkedin.com/company/thehumanworksco</a>
-          </div>
-        </aside>
+      <div class="book-direct" data-anim="rise">
+        <h3>Prefer to book directly?</h3>
+        <p>Pick a 30-minute slot straight from my calendar. You'll leave with two or three observations to act on.</p>
+        <!-- Cal.com popup: swap PASTE-CAL-USERNAME/30min for the real event link -->
+        <button type="button" class="btn btn-dark" data-cal-namespace="30min" data-cal-link="PASTE-CAL-USERNAME/30min" data-cal-config='{"layout":"month_view"}'>Book a time <svg><use href="#icon-arrow-right"></use></svg></button>
+        <p class="book-direct-or">or <button type="button" class="link-btn" data-open-contact-modal>send a message instead</button></p>
       </div>
-      <div class="contact-calendar" data-anim="rise">
-        <h3>Book a discovery call</h3>
-        <p>30 minutes &middot; Google Meet</p>
-        <!-- Google Calendar Appointment Scheduling begin -->
-        <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2bKsu9T7fMVNkzo_cDG_so5olPQaL9BV-gv_jCQNnJyfTuh_2C4NntNvZ7SZkaTEWo9ETgDniN?gv=true" style="border:0" width="100%" height="600" frameborder="0" title="Book a discovery call with Nisha Kashyap"></iframe>
-        <!-- end Google Calendar Appointment Scheduling -->
+
+      <div class="contact-direct-row" data-anim="rise">
+        <a href="mailto:nishakashyap@thehumanworksco.com"><svg><use href="#icon-mail"></use></svg>nishakashyap@thehumanworksco.com</a>
+        <a href="https://wa.me/918019229111" target="_blank" rel="noopener"><svg><use href="#icon-whatsapp"></use></svg>WhatsApp</a>
+        <a href="https://www.linkedin.com/company/thehumanworksco/" target="_blank" rel="noopener"><svg class="ico-fill"><use href="#icon-linkedin"></use></svg>LinkedIn</a>
       </div>
     </div>
   </section>
+
+  <div class="modal-overlay" id="contactModalOverlay" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <button class="modal-close" id="contactModalClose" type="button" aria-label="Close">
+        <svg><use href="#icon-close"></use></svg>
+      </button>
+
+      <!-- Contact form posts to a Google Form via the hidden iframe below; the
+           option values in the two <select>s must match the Google Form's own
+           options exactly or those fields arrive blank. -->
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" title="form target"></iframe>
+      <form class="contact-form" id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfVBccK9PjAFV5FaGD5m4s3_FY4mQAZRxfQfytw8dYyKBn9_w/formResponse" method="POST" target="hidden_iframe">
+        <h3 id="contactModalTitle">Send a message</h3>
+        <p class="modal-lede">Tell me where you are and where you're headed. I'll reply within one business day.</p>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div class="form-row">
+          <label>Full name <span class="req">*</span>
+            <input type="text" name="entry.1683786841" required autocomplete="name">
+          </label>
+          <label>Work email <span class="req">*</span>
+            <input type="email" name="entry.1581725248" required autocomplete="email">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Company name <span class="req">*</span>
+            <input type="text" name="entry.1698401591" required autocomplete="organization">
+          </label>
+          <label>Startup stage
+            <select name="entry.832565651">
+              <option value="">Select…</option>
+              <option>Pre-Seed</option>
+              <option>Seed</option>
+              <option>Series A</option>
+              <option>Series B</option>
+              <option>Growth Stage</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+        <label>What's on your mind?
+          <select name="entry.1450436195">
+            <option value="">Select…</option>
+            <option>Fractional HR Leadership</option>
+            <option>People Operations Setup</option>
+            <option>AI-Powered HR Systems</option>
+            <option>Culture &amp; People Experience</option>
+            <option>Hiring &amp; Talent Support</option>
+            <option>Project-Based Support</option>
+          </select>
+        </label>
+        <label>Tell me more <span class="opt">(optional)</span>
+          <textarea name="entry.1172782576" rows="4"></textarea>
+        </label>
+        <fieldset class="form-radios">
+          <legend>Preferred contact method</legend>
+          <label class="radio"><input type="radio" name="entry.559397197" value="Email" checked> Email</label>
+          <label class="radio"><input type="radio" name="entry.559397197" value="Phone call"> Phone call</label>
+          <label class="radio"><input type="radio" name="entry.559397197" value="Video meeting"> Video meeting</label>
+        </fieldset>
+        <label class="checkbox">
+          <input type="checkbox" name="entry.827009360" value="I agree to TheHumanWorksCo contacting me about my enquiry." required>
+          <span>I agree to TheHumanWorksCo contacting me about my enquiry. <span class="req">*</span></span>
+        </label>
+        <button type="submit" class="btn btn-primary">Send message</button>
+        <p class="form-note">Not a booking &mdash; I'll reply within one business day to find a time.</p>
+      </form>
+
+      <div class="form-success" id="formSuccess" hidden>
+        <span class="icon-badge"><svg><use href="#icon-check-circle"></use></svg></span>
+        <h3>Got it — thank you.</h3>
+        <p>I'll reply within one business day to find a time.</p>
+      </div>
+    </div>
+  </div>
 
 </main>
 
@@ -769,5 +774,12 @@
 </a>
 
 <script src="assets/js/main.js"></script>
+<!-- Cal.com popup embed — swap the username/event slug in the "Book a time"
+     button's data-cal-link attribute above once you have it. -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "30min", { origin: "https://app.cal.com" });
+  Cal.ns["30min"]("ui", { "theme": "light", "styles": { "branding": { "brandColor": "#0d0d0d" } }, "hideEventTypeDetails": false, "layout": "month_view" });
+</script>
 </body>
 </html>

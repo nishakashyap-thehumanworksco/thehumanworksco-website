@@ -92,6 +92,36 @@
     }
   }
 
+  /* ---------- Contact modal: open/close, focus handling ---------- */
+  var contactModal = document.getElementById('contactModalOverlay');
+  var contactModalClose = document.getElementById('contactModalClose');
+  var contactModalOpeners = document.querySelectorAll('[data-open-contact-modal]');
+  if (contactModal && contactModalOpeners.length) {
+    var lastFocused = null;
+    var openContactModal = function () {
+      lastFocused = document.activeElement;
+      contactModal.hidden = false;
+      body.classList.add('modal-open');
+      var firstField = contactModal.querySelector('input:not(.hp), select, textarea');
+      if (firstField) firstField.focus();
+    };
+    var closeContactModal = function () {
+      contactModal.hidden = true;
+      body.classList.remove('modal-open');
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    };
+    contactModalOpeners.forEach(function (btn) {
+      btn.addEventListener('click', openContactModal);
+    });
+    if (contactModalClose) contactModalClose.addEventListener('click', closeContactModal);
+    contactModal.addEventListener('click', function (e) {
+      if (e.target === contactModal) closeContactModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !contactModal.hidden) closeContactModal();
+    });
+  }
+
   /* ---------- Contact form -> hidden iframe, inline confirmation ---------- */
   var contactForm = document.getElementById('contactForm');
   var contactFrame = document.getElementById('hidden_iframe');
